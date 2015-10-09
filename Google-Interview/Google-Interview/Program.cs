@@ -1,6 +1,6 @@
 ﻿using Google_Interview.sorting;
+using Google_Interview.Sorting;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace Google_Interview
@@ -10,14 +10,22 @@ namespace Google_Interview
         static void Main(string[] args)
         {
             Console.WriteLine(TestInsertionSort());
+            Console.WriteLine(TestMergeSort());
             Console.ReadKey();
         }
 
         public static bool TestInsertionSort()
         {
-            List<int> list = GenerateRandomList(10);
+            List<int> list = GenerateRandomList(10000);
             InsertionSort<int>.Sort(list);
             return IsSorted(list);
+        }
+
+        public static bool TestMergeSort()
+        {
+            List<int> list = GenerateRandomList(10000);
+            IList<int> sorted = Mergesort<int>.Sort(list);
+            return IsSorted(sorted);
         }
 
         #region Private Methods
