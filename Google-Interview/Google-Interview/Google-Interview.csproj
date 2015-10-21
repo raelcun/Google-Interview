@@ -54,6 +54,7 @@
     <Compile Include="Map\Node.cs" />
     <Compile Include="LinkedList\LinkedList.cs" />
     <Compile Include="LinkedList\Node.cs" />
+    <Compile Include="Data Structures\Queue.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -69,5 +70,6 @@
   <ItemGroup>
     <Folder Include="Map\" />
     <Folder Include="LinkedList\" />
+    <Folder Include="Data Structures\" />
   </ItemGroup>
 </Project>

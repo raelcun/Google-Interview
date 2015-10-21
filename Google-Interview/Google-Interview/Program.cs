@@ -2,6 +2,7 @@
 using Google_Interview.Map;
 using System;
 using System.Collections.Generic;
+using Google_Interview.Data_Structures;
 
 namespace Google_Interview
 {
@@ -9,7 +10,8 @@ namespace Google_Interview
     {
         static void Main(string[] args)
         {
-			Console.WriteLine(TestLinkedList());
+			Console.WriteLine(TestQueue());
+			//Console.WriteLine(TestLinkedList());
 			//Console.WriteLine(TestMap());
             //Console.WriteLine(TestQuickSort());
             //Console.WriteLine(TestInsertionSort());
@@ -18,6 +20,15 @@ namespace Google_Interview
         }
 
         #region Public Methods
+		public static bool TestQueue()
+		{
+			List<int> list = GenerateRandomList(10);
+			var queue = new Google_Interview.Data_Structures.Queue<int>();
+			for (int i = 0; i < list.Count; i++) queue.Enqueue(list[i]);
+			for (int i = 0; i < list.Count; i++) if (queue.Dequeue() != list[i]) return false;
+			return true;
+		}
+
 		public static bool TestLinkedList()
 		{
 			List<int> list = GenerateRandomList(10000);
