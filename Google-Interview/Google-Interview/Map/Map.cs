@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Google_Interview
+namespace Google_Interview.Map
 {
 	public class Map<K,V> where V : struct
 	{

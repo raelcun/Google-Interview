@@ -1,4 +1,5 @@
 ﻿using Google_Interview.Sorting;
+using Google_Interview.Map;
 using System;
 using System.Collections.Generic;
 
@@ -8,7 +9,8 @@ namespace Google_Interview
     {
         static void Main(string[] args)
         {
-			Console.WriteLine(TestMap());
+			Console.WriteLine(TestLinkedList());
+			//Console.WriteLine(TestMap());
             //Console.WriteLine(TestQuickSort());
             //Console.WriteLine(TestInsertionSort());
             //Console.WriteLine(TestMergeSort());
@@ -16,6 +18,15 @@ namespace Google_Interview
         }
 
         #region Public Methods
+		public static bool TestLinkedList()
+		{
+			List<int> list = GenerateRandomList(10000);
+			var ll = new Google_Interview.LinkedList.LinkedList<int>();
+			for (int i = 0; i < list.Count; i++) ll.Append(list[i]);
+			for (int i = 0; i < list.Count; i++) if (!ll.Get(i).Equals(list[i])) return false;
+			return true;
+		}
+
 		public static bool TestMap()
 		{
 			List<int> list = GenerateRandomList(10000);

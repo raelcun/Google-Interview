@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Google_Interview
+namespace Google_Interview.Map
 {
 	public class Node<K, V>
 	{

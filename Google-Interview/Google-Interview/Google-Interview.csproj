@@ -52,6 +52,8 @@
     <Compile Include="Sorting\QuickSort.cs" />
     <Compile Include="Map\Map.cs" />
     <Compile Include="Map\Node.cs" />
+    <Compile Include="LinkedList\LinkedList.cs" />
+    <Compile Include="LinkedList\Node.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -66,5 +68,6 @@
   -->
   <ItemGroup>
     <Folder Include="Map\" />
+    <Folder Include="LinkedList\" />
   </ItemGroup>
 </Project>
