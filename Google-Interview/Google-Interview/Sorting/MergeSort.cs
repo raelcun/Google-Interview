@@ -1,13 +1,10 @@
-﻿using Google_Interview.sorting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Google_Interview.Sorting
 {
-    public static class Mergesort<T> where T : IComparable
+    public static class MergeSort<T> where T : IComparable
     {
         public static IList<T> Sort(IList<T> list)
         {

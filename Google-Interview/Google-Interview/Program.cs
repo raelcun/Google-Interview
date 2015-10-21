@@ -1,5 +1,4 @@
-﻿using Google_Interview.sorting;
-using Google_Interview.Sorting;
+﻿using Google_Interview.Sorting;
 using System;
 using System.Collections.Generic;
 
@@ -9,9 +8,19 @@ namespace Google_Interview
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(TestInsertionSort());
-            Console.WriteLine(TestMergeSort());
+			for(int i = 0; i < 100; i++)
+            	Console.WriteLine(TestQuickSort());
+            //Console.WriteLine(TestInsertionSort());
+            //Console.WriteLine(TestMergeSort());
             Console.ReadKey();
+        }
+
+        #region Public Methods
+        public static bool TestQuickSort()
+        {
+            List<int> list = GenerateRandomList(10000);
+            QuickSort<int>.Sort(list);
+            return IsSorted(list);
         }
 
         public static bool TestInsertionSort()
@@ -24,9 +33,10 @@ namespace Google_Interview
         public static bool TestMergeSort()
         {
             List<int> list = GenerateRandomList(10000);
-            IList<int> sorted = Mergesort<int>.Sort(list);
+            IList<int> sorted = MergeSort<int>.Sort(list);
             return IsSorted(sorted);
         }
+        #endregion Public Methods
 
         #region Private Methods
         private static bool IsSorted<T>(IList<T> list) where T : IComparable

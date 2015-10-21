@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Google_Interview.sorting
+namespace Google_Interview.Sorting
 {
     public static class InsertionSort<T> where T : IComparable
     {
