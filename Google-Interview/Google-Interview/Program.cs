@@ -10,7 +10,8 @@ namespace Google_Interview
     {
         static void Main(string[] args)
         {
-			Console.WriteLine(TestQueue());
+			Console.WriteLine(TestStack());
+			//Console.WriteLine(TestQueue());
 			//Console.WriteLine(TestLinkedList());
 			//Console.WriteLine(TestMap());
             //Console.WriteLine(TestQuickSort());
@@ -20,9 +21,18 @@ namespace Google_Interview
         }
 
         #region Public Methods
+		public static bool TestStack()
+		{
+			List<int> list = GenerateRandomList(10000);
+			var stack = new Google_Interview.Data_Structures.Stack<int>();
+			for (int i = 0; i < list.Count; i++) stack.Push(list[i]);
+			for (int i = 0; i < list.Count; i++) if (stack.Pop() != list[list.Count - i - 1]) return false;
+			return true;
+		}
+
 		public static bool TestQueue()
 		{
-			List<int> list = GenerateRandomList(10);
+			List<int> list = GenerateRandomList(10000);
 			var queue = new Google_Interview.Data_Structures.Queue<int>();
 			for (int i = 0; i < list.Count; i++) queue.Enqueue(list[i]);
 			for (int i = 0; i < list.Count; i++) if (queue.Dequeue() != list[i]) return false;
