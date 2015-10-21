@@ -8,14 +8,29 @@ namespace Google_Interview
     {
         static void Main(string[] args)
         {
-			for(int i = 0; i < 100; i++)
-            	Console.WriteLine(TestQuickSort());
+			Console.WriteLine(TestMap());
+            //Console.WriteLine(TestQuickSort());
             //Console.WriteLine(TestInsertionSort());
             //Console.WriteLine(TestMergeSort());
             Console.ReadKey();
         }
 
         #region Public Methods
+		public static bool TestMap()
+		{
+			List<int> list = GenerateRandomList(10000);
+			Map<int, int> map = new Map<int, int>(20000);
+			for(int i = 0; i < list.Count; i++)
+				map.put(i, list[i]);
+
+			for (int i = 0; i < list.Count; i++)
+			{
+				if (map.get(i) != list[i])
+					return false;
+			}
+			return true;
+		}
+
         public static bool TestQuickSort()
         {
             List<int> list = GenerateRandomList(10000);

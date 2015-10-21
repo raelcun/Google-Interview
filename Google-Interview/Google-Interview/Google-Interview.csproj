@@ -50,6 +50,8 @@
     <Compile Include="Sorting\InsertionSort.cs" />
     <Compile Include="Sorting\MergeSort.cs" />
     <Compile Include="Sorting\QuickSort.cs" />
+    <Compile Include="Map\Map.cs" />
+    <Compile Include="Map\Node.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -62,4 +64,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Map\" />
+  </ItemGroup>
 </Project>
