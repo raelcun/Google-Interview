@@ -1,8 +1,9 @@
 ﻿using Google_Interview.Sorting;
-using Google_Interview.Map;
 using System;
 using System.Collections.Generic;
 using Google_Interview.Data_Structures;
+using Google_Interview.Map;
+using System.Linq;
 
 namespace Google_Interview
 {
@@ -10,17 +11,37 @@ namespace Google_Interview
     {
         static void Main(string[] args)
         {
+			Console.WriteLine(TestBTree());
 			Console.WriteLine(TestStack());
-			//Console.WriteLine(TestQueue());
-			//Console.WriteLine(TestLinkedList());
-			//Console.WriteLine(TestMap());
-            //Console.WriteLine(TestQuickSort());
-            //Console.WriteLine(TestInsertionSort());
-            //Console.WriteLine(TestMergeSort());
+			Console.WriteLine(TestQueue());
+			Console.WriteLine(TestLinkedList());
+			Console.WriteLine(TestMap());
+            Console.WriteLine(TestQuickSort());
+            Console.WriteLine(TestInsertionSort());
+            Console.WriteLine(TestMergeSort());
+
+			Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }
 
         #region Public Methods
+		public static bool TestBTree()
+		{
+			Random r = new Random();
+			Dictionary<int, int> d = new Dictionary<int, int>();
+			for (int i = 0; i < 10; i++) try { d.Add(r.Next(1, 100), r.Next(1, 100)); } catch {}
+
+			var btree = new Google_Interview.Data_Structures.BTree<int, int>();
+			foreach (var kvp in d) btree.Add(kvp.Key, kvp.Value);
+
+			foreach (var kvp in d) if (btree.Get(kvp.Key) != kvp.Value) return false;
+
+			//btree.AllBFS((key, value) => Console.WriteLine(key + " : " + value));
+			//btree.AllDFS((key, value) => Console.WriteLine(key + " : " + value));
+
+			return true;
+		}
+
 		public static bool TestStack()
 		{
 			List<int> list = GenerateRandomList(10000);

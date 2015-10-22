@@ -24,6 +24,7 @@ namespace Google_Interview.Data_Structures
 			T ret = list[0];
 			for (int i = 0; i < list.Count - 1; i++)
 				list[i] = list[i+1];
+			list.RemoveAt(list.Count - 1);
 			return ret;
 		}
 
