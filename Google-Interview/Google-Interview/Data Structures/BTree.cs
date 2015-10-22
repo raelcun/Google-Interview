@@ -75,25 +75,6 @@ namespace Google_Interview.Data_Structures
 			}
 		}
 
-		protected void AllDFS(BNode<K, V> node, Action<K, V> callback)
-		{
-			if (node == null) return;
-
-			callback(node.Key, node.Value);
-			AllDFS(node.Left, callback);
-			AllDFS(node.Right, callback);
-		}
-
-		protected void AllBFS(BNode<K, V> node, Action<K, V> callback)
-		{
-			if (node == null) return;
-
-			if (node.Left != null) callback(node.Left.Key, node.Left.Value);
-			if (node.Right != null) callback(node.Right.Key, node.Right.Value);
-			AllBFS(node.Left, callback);
-			AllBFS(node.Right, callback);
-		}
-
 		protected void Add(BNode<K,V> root, K key, V value)
 		{
 			int direction = key.CompareTo(root.Key);
