@@ -12,13 +12,13 @@ namespace Google_Interview
         static void Main(string[] args)
         {
 			Console.WriteLine(TestBTree());
-			Console.WriteLine(TestStack());
-			Console.WriteLine(TestQueue());
-			Console.WriteLine(TestLinkedList());
-			Console.WriteLine(TestMap());
-            Console.WriteLine(TestQuickSort());
-            Console.WriteLine(TestInsertionSort());
-            Console.WriteLine(TestMergeSort());
+//			Console.WriteLine(TestStack());
+//			Console.WriteLine(TestQueue());
+//			Console.WriteLine(TestLinkedList());
+//			Console.WriteLine(TestMap());
+//          Console.WriteLine(TestQuickSort());
+//          Console.WriteLine(TestInsertionSort());
+//          Console.WriteLine(TestMergeSort());
 
 			Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
@@ -27,14 +27,60 @@ namespace Google_Interview
         #region Public Methods
 		public static bool TestBTree()
 		{
+			List<int> list = GenerateRandomList(10000, -10000, 10000, false);
+			List<int> added = new List<int>();
+
+			var btree = new Google_Interview.Data_Structures.BST<int>();
+
 			Random r = new Random();
-			Dictionary<int, int> d = new Dictionary<int, int>();
-			for (int i = 0; i < 10; i++) try { d.Add(r.Next(1, 100), r.Next(1, 100)); } catch {}
+			for (int i = 0; i < 10000; i++)
+			{
+				if (r.Next(0, 2) == 0) // test add
+				{
+					int rand = r.Next(0, list.Count);
+					int value = list[rand];
+					added.Add(value);
+					btree.Add(value);
+					btree.ValidateBinaryTree();
+					list.RemoveAt(rand);
+					if (btree.Find(value) == null)
+						return false;
+				}
+				else if (!btree.IsEmpty()) // test remove
+				{
+					int rand = r.Next(0, added.Count);
+					int value = added[rand];
+					added.RemoveAt(rand);
+					btree.Remove(value);
+					btree.ValidateBinaryTree();
+					list.Add(value);
+					if (btree.Find(value) != null)
+						return false;
+				}
+			}
 
-			var btree = new Google_Interview.Data_Structures.BTree<int, int>();
-			foreach (var kvp in d) btree.Add(kvp.Key, kvp.Value);
+			btree.BreadthFirstTraversal((node) =>
+				{
+					Console.Write(node == null ? "# " : node.Value + " ");
+				}, true);
 
-			foreach (var kvp in d) if (btree.Get(kvp.Key) != kvp.Value) return false;
+			string serialized = btree.Serialize();
+			var deserialized = Google_Interview.Data_Structures.BST<int>.Deserialize(serialized);
+			string traversed = "";
+			deserialized.DepthFirstTraversal(BST<int>.TraversalOrder.PRE, (node) =>
+				{
+					traversed += node == null ? "# " : node.Value + " ";
+				}, true);
+			if (!serialized.Equals(traversed)) return false;
+
+//			Random r = new Random();
+//			Dictionary<int, int> d = new Dictionary<int, int>();
+//			for (int i = 0; i < 10; i++) try { d.Add(r.Next(1, 100), r.Next(1, 100)); } catch {}
+//
+//			var btree = new Google_Interview.Data_Structures.BTree<int, int>();
+//			foreach (var kvp in d) btree.Add(kvp.Key, kvp.Value);
+//
+//			foreach (var kvp in d) if (btree.Get(kvp.Key) != kvp.Value) return false;
 
 			//btree.AllBFS((key, value) => Console.WriteLine(key + " : " + value));
 			//btree.AllDFS((key, value) => Console.WriteLine(key + " : " + value));
@@ -115,11 +161,15 @@ namespace Google_Interview
             return true;
         }
 
-        private static List<int> GenerateRandomList(int length, int min = -10000, int max = 10000)
+		private static List<int> GenerateRandomList(int length, int min = -10000, int max = 10000, bool allowDups = true)
         {
             List<int> list = new List<int>();
             Random r = new Random();
-            for (int i = 0; i < length; i++) list.Add(r.Next(min, max));
+			while (list.Count < length)
+			{
+				int rand = r.Next(min, max);
+				if (allowDups || !list.Contains(rand)) list.Add(rand);
+			}
             return list;
         }
         #endregion Private Methods
