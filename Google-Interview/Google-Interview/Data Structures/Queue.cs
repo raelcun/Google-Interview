@@ -5,7 +5,7 @@ namespace Google_Interview.Data_Structures
 {
 	public class Queue<T>
 	{
-		private List<T> list = new List<T>();
+		private readonly List<T> list = new List<T>();
 
 		public int Length()
 		{

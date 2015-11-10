@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Google_Interview.Map
 {
 	public class Map<K,V> where V : struct
 	{
-		private Node<K,V>[] list;
+		private readonly Node<K,V>[] list;
 
 		public Map(int capacity)
 		{
 			list = new Node<K, V>[capacity];
 		}
 
-		public void put(K key, V value)
+		public void Put(K key, V value)
 		{
 			int hash = key.GetHashCode();
 			int bucket = Math.Abs(hash % list.Length);
@@ -28,7 +27,7 @@ namespace Google_Interview.Map
 			throw new Exception("Hashmap is full");
 		}
 
-		public V? get(K key)
+		public V? Get(K key)
 		{
 			int hash = key.GetHashCode ();
 			int bucket = Math.Abs(hash % list.Length);

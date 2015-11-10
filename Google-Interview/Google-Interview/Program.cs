@@ -12,13 +12,13 @@ namespace Google_Interview
         static void Main(string[] args)
         {
 			Console.WriteLine(TestBTree());
-//			Console.WriteLine(TestStack());
-//			Console.WriteLine(TestQueue());
-//			Console.WriteLine(TestLinkedList());
-//			Console.WriteLine(TestMap());
-//          Console.WriteLine(TestQuickSort());
-//          Console.WriteLine(TestInsertionSort());
-//          Console.WriteLine(TestMergeSort());
+			Console.WriteLine(TestStack());
+			Console.WriteLine(TestQueue());
+			Console.WriteLine(TestLinkedList());
+			Console.WriteLine(TestMap());
+            Console.WriteLine(TestQuickSort());
+            Console.WriteLine(TestInsertionSort());
+            Console.WriteLine(TestMergeSort());
 
 			Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
@@ -30,7 +30,7 @@ namespace Google_Interview
 			List<int> list = GenerateRandomList(10000, -10000, 10000, false);
 			List<int> added = new List<int>();
 
-			var btree = new Google_Interview.Data_Structures.BST<int>();
+			var btree = new BST<int>();
 
 			Random r = new Random();
 			for (int i = 0; i < 10000; i++)
@@ -59,59 +59,47 @@ namespace Google_Interview
 				}
 			}
 
-			btree.BreadthFirstTraversal((node) =>
-				{
-					Console.Write(node == null ? "# " : node.Value + " ");
-				}, true);
+			//btree.BreadthFirstTraversal((node) =>
+			//	{
+			//		Console.Write(node == null ? "# " : node.Value + " ");
+			//	}, true);
 
 			string serialized = btree.Serialize();
-			var deserialized = Google_Interview.Data_Structures.BST<int>.Deserialize(serialized);
+			var deserialized = BST<int>.Deserialize(serialized);
 			string traversed = "";
-			deserialized.DepthFirstTraversal(BST<int>.TraversalOrder.PRE, (node) =>
+			deserialized.DepthFirstTraversal(BST<int>.TraversalOrder.Pre, (node) =>
 				{
 					traversed += node == null ? "# " : node.Value + " ";
 				}, true);
 			if (!serialized.Equals(traversed)) return false;
-
-//			Random r = new Random();
-//			Dictionary<int, int> d = new Dictionary<int, int>();
-//			for (int i = 0; i < 10; i++) try { d.Add(r.Next(1, 100), r.Next(1, 100)); } catch {}
-//
-//			var btree = new Google_Interview.Data_Structures.BTree<int, int>();
-//			foreach (var kvp in d) btree.Add(kvp.Key, kvp.Value);
-//
-//			foreach (var kvp in d) if (btree.Get(kvp.Key) != kvp.Value) return false;
-
-			//btree.AllBFS((key, value) => Console.WriteLine(key + " : " + value));
-			//btree.AllDFS((key, value) => Console.WriteLine(key + " : " + value));
-
+            
 			return true;
 		}
 
 		public static bool TestStack()
 		{
 			List<int> list = GenerateRandomList(10000);
-			var stack = new Google_Interview.Data_Structures.Stack<int>();
-			for (int i = 0; i < list.Count; i++) stack.Push(list[i]);
-			for (int i = 0; i < list.Count; i++) if (stack.Pop() != list[list.Count - i - 1]) return false;
+			var stack = new Data_Structures.Stack<int>();
+			foreach (int i in list) stack.Push(i);
+		    for (int i = 0; i < list.Count; i++) if (stack.Pop() != list[list.Count - i - 1]) return false;
 			return true;
 		}
 
 		public static bool TestQueue()
 		{
 			List<int> list = GenerateRandomList(10000);
-			var queue = new Google_Interview.Data_Structures.Queue<int>();
-			for (int i = 0; i < list.Count; i++) queue.Enqueue(list[i]);
-			for (int i = 0; i < list.Count; i++) if (queue.Dequeue() != list[i]) return false;
+			var queue = new Data_Structures.Queue<int>();
+			foreach (int i in list) queue.Enqueue(i);
+		    for (int i = 0; i < list.Count; i++) if (queue.Dequeue() != list[i]) return false;
 			return true;
 		}
 
 		public static bool TestLinkedList()
 		{
 			List<int> list = GenerateRandomList(10000);
-			var ll = new Google_Interview.LinkedList.LinkedList<int>();
-			for (int i = 0; i < list.Count; i++) ll.Append(list[i]);
-			for (int i = 0; i < list.Count; i++) if (!ll.Get(i).Equals(list[i])) return false;
+			var ll = new LinkedList.LinkedList<int>();
+			foreach (int i in list) ll.Append(i);
+		    for (int i = 0; i < list.Count; i++) if (!ll.Get(i).Equals(list[i])) return false;
 			return true;
 		}
 
@@ -120,14 +108,9 @@ namespace Google_Interview
 			List<int> list = GenerateRandomList(10000);
 			Map<int, int> map = new Map<int, int>(20000);
 			for(int i = 0; i < list.Count; i++)
-				map.put(i, list[i]);
+				map.Put(i, list[i]);
 
-			for (int i = 0; i < list.Count; i++)
-			{
-				if (map.get(i) != list[i])
-					return false;
-			}
-			return true;
+		    return !list.Where((t, i) => map.Get(i) != t).Any();
 		}
 
         public static bool TestQuickSort()

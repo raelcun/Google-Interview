@@ -27,7 +27,7 @@ namespace Google_Interview.Data_Structures
 
 		public override string ToString ()
 		{
-			return string.Format ("[Node: Id={0}, Value={1}]", Id, Value);
+			return $"[Node: Id={Id}, Value={Value}]";
 		}
 	}
 
@@ -51,9 +51,9 @@ namespace Google_Interview.Data_Structures
 		#region Public Constants
 		public enum TraversalOrder
 		{
-			PRE,
-			IN,
-			POST
+			Pre,
+			In,
+			Post
 		}
 		#endregion Public Constants
 
@@ -115,11 +115,10 @@ namespace Google_Interview.Data_Structures
 			if (IsEmpty()) return null;
 
 			BNode<T> current = Root;
-			int direction = 0;
-			int parentDirection = 0;
+		    int parentDirection = 0;
 			while (true)
 			{
-				direction = value.CompareTo(current.Value);
+				int direction = value.CompareTo(current.Value);
 				if (direction == 0) break;
 				parentDirection = direction;
 				current = direction < 0 ? current.Left : current.Right;
@@ -168,7 +167,7 @@ namespace Google_Interview.Data_Structures
 					this.Root = current.Left == null ? current.Left : current.Right;
 				else
 				{
-					BNode<T> successor = current.Right != null ? current.Right : current.Left;
+					BNode<T> successor = current.Right ?? current.Left;
 
 					// connect parent to successor
 					if (parentDirection > 0)
@@ -215,18 +214,18 @@ namespace Google_Interview.Data_Structures
 		{
 			if (IsEmpty()) return;
 
-			DepthFirstTraversal(TraversalOrder.PRE, (node) =>
+			DepthFirstTraversal(TraversalOrder.Pre, (node) =>
 				{
 					if (node.Left != null)
 					{
-						Debug.Assert(node.Left.Parent.Equals(node), string.Format("Pointers between parent {0} and left child {1} don't match up", node.Value, node.Left.Value));
-						Debug.Assert(node.Left.Value.CompareTo(node.Value) < 0, string.Format("Value of left child {0} is greater than parent {1}", node.Left.Value, node.Value));
+						Debug.Assert(node.Left.Parent.Equals(node), $"Pointers between parent {node.Value} and left child {node.Left.Value} don't match up");
+						Debug.Assert(node.Left.Value.CompareTo(node.Value) < 0, $"Value of left child {node.Left.Value} is greater than parent {node.Value}");
 					}
 
 					if (node.Right != null)
 					{
-						Debug.Assert(node.Right.Parent.Equals(node), string.Format("Pointers between parent {0} and right child {1} don't match up", node.Value, node.Right.Value));
-						Debug.Assert(node.Right.Value.CompareTo(node.Value) > 0, string.Format("Value of right child {0} is greater than parent {1}", node.Right.Value, node.Value));
+						Debug.Assert(node.Right.Parent.Equals(node), $"Pointers between parent {node.Value} and right child {node.Right.Value} don't match up");
+						Debug.Assert(node.Right.Value.CompareTo(node.Value) > 0, $"Value of right child {node.Right.Value} is greater than parent {node.Value}");
 					}
 				});
 		}
@@ -234,7 +233,7 @@ namespace Google_Interview.Data_Structures
 		public string Serialize()
 		{
 			string ret = "";
-			DepthFirstTraversal(TraversalOrder.PRE, (node) =>
+			DepthFirstTraversal(TraversalOrder.Pre, (node) =>
 				{
 					if (node == null) { ret += "# "; return; }
 					ret += node.Value + " ";
@@ -265,11 +264,11 @@ namespace Google_Interview.Data_Structures
 				if (includeNulls) cb(null);
 				return;
 			}
-			if (order == TraversalOrder.PRE) cb(start);
+			if (order == TraversalOrder.Pre) cb(start);
 			InternalDepthFirstTraversal(start.Left, order, cb, includeNulls);
-			if (order == TraversalOrder.IN) cb(start);
+			if (order == TraversalOrder.In) cb(start);
 			InternalDepthFirstTraversal(start.Right, order, cb, includeNulls);
-			if (order == TraversalOrder.POST) cb(start);
+			if (order == TraversalOrder.Post) cb(start);
 		}
 		#endregion Protected Methods
 
@@ -285,10 +284,12 @@ namespace Google_Interview.Data_Structures
 				return null;
 			}
 
-			BNode<int> root = new BNode<int>(int.Parse(token));
-			root.Left = Deserialize(tokens);
-			root.Right = Deserialize(tokens);
-			return root;
+		    BNode<int> root = new BNode<int>(int.Parse(token))
+		    {
+		        Left = Deserialize(tokens),
+		        Right = Deserialize(tokens)
+		    };
+		    return root;
 		}
 	}
 }
